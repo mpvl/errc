@@ -41,7 +41,7 @@ func newFaultyReader() (io.ReadCloser, error) {
 	return nil, errors.New("errd_test: error")
 }
 
-func ExampleRun() {
+func ExampleCatch() {
 	func() (err error) {
 		e := errc.Catch(&err)
 		defer e.Handle()
@@ -58,7 +58,7 @@ func ExampleRun() {
 	// Hello World!
 }
 
-func ExampleRun_pipe() {
+func ExampleCatch_pipe() {
 	r, w := io.Pipe()
 	go func() {
 		var err error
@@ -102,11 +102,11 @@ func do(ctx context.Context) {
 	// do something
 }
 
-// ExampleE_Defer_cancelHelper shows how a helper function may call a
+// ExampleCatcher_Defer_cancelHelper shows how a helper function may call a
 // defer in the caller's E. Notice how contextWithTimeout taking care of the
 // call to Defer is both evil and handy at the same time. Such a thing would
 // likely not be allowed if this were a language feature.
-func ExampleE_Defer_cancelHelper() {
+func ExampleCatcher_Defer_cancelHelper() {
 	contextWithTimeout := func(e *errc.Catcher, req *http.Request) context.Context {
 		var cancel context.CancelFunc
 		ctx := req.Context()
