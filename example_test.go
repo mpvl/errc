@@ -87,12 +87,12 @@ func ExampleCatch_pipe() {
 	// 	var err = errors.New("panicking")
 	//
 	// 	// No need to intercept error: io.PipeWriter.CloseWithError always
-	// 	 returns nil.
+	// 	// returns nil.
 	// 	defer w.CloseWithError(err)
 	//
 	// 	// Ensure that CloseWithError is not called with a nil error on panic.
 	// 	// In this case use recover: because we set err multiple times, it
-	// 	// results seems a bit easier than managing everything by sentinel.
+	// 	// seems a bit easier than managing everything by sentinel.
 	// 	defer func() {
 	// 		if v := recover(); v != nil {
 	// 			err = errors.New("panicking")
