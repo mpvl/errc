@@ -78,18 +78,35 @@ func ExampleCatch_pipe() {
 	// The above goroutine is equivalent to:
 	//
 	// go func() {
-	// 	var err error                // used to intercept downstream errors
+	// 	// err is used to intercept downstream errors. Note that we set it to a
+	// 	// sentinel even though we recover the panic below to cover the case of
+	// 	// a panic between the two defers. This is very unlikely to be
+	// 	// necessary, but remember: a panic may be caused by external factors
+	// 	// and code requiring high reliability should always consider the
+	// 	// possibility of a panic occurring at any point.
+	// 	var err = errors.New("panicking")
+	//
+	// 	// No need to intercept error: CloseWithError always returns nil.
 	// 	defer w.CloseWithError(err)
+	//
+	// 	// Ensure that CloseWithError is not called with a nil error on panic.
+	// 	// In this case use recover: because we set err multiple times, it
+	// 	// results seems a bit easier than managing everything by sentinel.
+	// 	defer func() {
+	// 		if v := recover(); v != nil {
+	// 			err = errors.New("panicking")
+	// 		}
+	//  }()
 	//
 	// 	r, err := newReader()
 	// 	if err != nil {
 	// 		return
 	// 	}
 	// 	defer func() {
-	// 		if errC := r.Close(); errC != nil && err == nil {
+	// 		if errC := r.Close(); err == nil {
 	//			err = errC
 	//		}
-	// 	}
+	// 	}()
 	//
 	// 	_, err = io.Copy(w, r)
 	// }()

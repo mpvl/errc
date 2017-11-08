@@ -90,7 +90,7 @@
 // Error Handlers
 //
 // Error handlers can be used to decorate errors, log them, or do anything else
-// you ussually do with errors.
+// you usually do with errors.
 //
 // Suppose we want to use github.com/pkg/errors to decorate errors. A simple
 // handler can be defined as:
