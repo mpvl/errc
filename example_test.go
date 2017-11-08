@@ -86,7 +86,8 @@ func ExampleCatch_pipe() {
 	// 	// possibility of a panic occurring at any point.
 	// 	var err = errors.New("panicking")
 	//
-	// 	// No need to intercept error: CloseWithError always returns nil.
+	// 	// No need to intercept error: io.PipeWriter.CloseWithError always
+	// 	 returns nil.
 	// 	defer w.CloseWithError(err)
 	//
 	// 	// Ensure that CloseWithError is not called with a nil error on panic.
@@ -96,7 +97,7 @@ func ExampleCatch_pipe() {
 	// 		if v := recover(); v != nil {
 	// 			err = errors.New("panicking")
 	// 		}
-	//  }()
+	// 	}()
 	//
 	// 	r, err := newReader()
 	// 	if err != nil {
@@ -104,8 +105,8 @@ func ExampleCatch_pipe() {
 	// 	}
 	// 	defer func() {
 	// 		if errC := r.Close(); err == nil {
-	//			err = errC
-	//		}
+	// 			err = errC
+	// 		}
 	// 	}()
 	//
 	// 	_, err = io.Copy(w, r)
